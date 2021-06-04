@@ -37,6 +37,7 @@
     var brickPadding = 10;
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
+    var score = 0;
 
     var bricks = [];
         for(var c=0; c<brickColumnCount; c++) {
@@ -93,6 +94,7 @@ function draw() {
     drawBricks();
     drawBall();
     drawPaddle();
+    drawScore();
     collisionDetection();
     
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -164,11 +166,26 @@ function collisionDetection() {
                     dy = -dy;
                     color = chColor();
                     b.status = 0;
+                    score++;
+                    if(score == brickRowCount*brickColumnCount) {
+                        
+                        alert("YOU DID IT! NICE WORK!!");
+                        document.getElementById('score').innerHTML = drawScore();
+                        document.location.reload();
+                        clearInterval(interval); // Needed for Chrome to end game
+                    }
                 }
             }
         }
     }
 }
+//score board!
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: "+score *2, 8, 20);
+}
+
 
 var interval = setInterval(draw, 10);
     
