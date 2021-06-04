@@ -1,7 +1,7 @@
 ```
 ## A fun game of Bouncy Ball and Paddle! 
 ```
-#### * Player can use a mouse or key board arrows to move the paddle so that the bouncy ball does not bounce on the floor. 
+#### Player can use a mouse or key board arrows to move the paddle to hit the ball
 * Points are accumulated if player successfully taps the ball into the brick wall, deleting the brick! 
 * Each player has 3 lives!
 
@@ -18,7 +18,7 @@ JavaScript
 ```
 
 
-![JS game](.img/Game.png)
+![JS game](./img/Game.png)
 
 
 
