@@ -138,6 +138,7 @@ function draw() {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
 
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
@@ -156,6 +157,16 @@ function keyUpHandler(e) {
         leftPressed = false;
     }
 }
+
+
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
+    }
+}
+
+
 // collision detection function with the bricks
 function collisionDetection() {
     for(var c=0; c<brickColumnCount; c++) {
@@ -170,7 +181,7 @@ function collisionDetection() {
                     if(score == brickRowCount*brickColumnCount) {
                         
                         alert("YOU DID IT! NICE WORK!!");
-                        document.getElementById('score').innerHTML = drawScore();
+                        
                         document.location.reload();
                         clearInterval(interval); // Needed for Chrome to end game
                     }
