@@ -1,0 +1,26 @@
+{
+  "name": "JavaScript",
+  "version": "1.0.0",
+  "description": "``` ## A fun game of Bouncy Ball and Paddle!  ``` #### Player can use a mouse or key board arrows to move the paddle to hit the ball * Points are accumulated if player successfully taps the ball into the brick wall, deleting the brick!  * Each player has 3 lives!",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreaGraziosi/BreakOut-JS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreaGraziosi/BreakOut-JS/issues"
+  },
+  "homepage": "https://github.com/AndreaGraziosi/BreakOut-JS#readme"
+}
