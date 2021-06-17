@@ -1,0 +1,54 @@
+For the bundling module:
+npm init -y
+npm install --save-dev webpack webpack-cli
+==================================
+Set up directory
+|- package.json
+|- webpack.config.js
+|- /src
+  |- index.js
+|- /dist
+  |- index.html
+
+==================================
+
+Change this in the index.html file:
+<script src="bundle.js"></script>
+
+
+==================================
+ADD THIS TO THE webpack.config.js.
+
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};
+
+=========================
+
+add to "scripts" in package.json file
+"develop": "webpack --mode development --watch",
+ "build": "webpack --mode production"
+
+ ==================================
+
+ use: npm run develop 
+ to bundle project in development mode
+ 
+ 
+ ===============================
+npm run scriptName
+ ===============================
+
+ Try production mode.
+
+npm run build
+
+This script doesn’t use the –watch flag
+
+"build": "webpack --mode production"

@@ -1,0 +1,32 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ (() => {
+
+eval("////  CLASSES\nclass Ball {\n    constructor() {\n      this.ballRadius = 10;\n      this.color = '#0095DD';\n      this.x = 250;\n      this.y = 160;\n      this.dx = 2;\n      this.dy = 2;\n    }\n    // this method draws the ball\n    drawBall(ctx) {\n      ctx.beginPath();\n      ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2);\n      ctx.fillStyle = this.color;\n      ctx.fill();\n      ctx.closePath();\n    }\n    // this method changes the position of the ball on the canvas\n    move(canvas) {\n      // this is what moves the ball (literaly)\n      if (this.x + this.dx > canvas.width - this.ballRadius || this.x + this.dx < this.ballRadius) {\n        this.dx = -(this.dx);\n      }\n      if (this.y + this.dy > canvas.height - this.ballRadius || this.y + this.dy < this.ballRadius) {\n        this.dy = -(this.dy);\n      }\n      this.x += this.dx;\n      this.y += this.dy;\n    }\n    determineLoss(canvas, paddle) {\n      // determine if ball goes off screen or not!\n      if (this.y + this.dy > canvas.height - this.ballRadius) {\n        if (this.x > paddle.x && this.x < paddle.x + paddle.width) {\n          this.dy = -(this.dy);\n        } else {\n            alert('GAME OVER');\n            document.location.reload();\n        }\n      }\n    }\n  }\n  class Brick {\n    constructor(argX, argY, argStatus) {\n      this.x = argX;\n      this.y = argY;\n      this.status = argStatus;\n      this.color = '#0095DD';\n      this.width = 75;\n      this.height = 20;\n    }\n    // methods here\n    // THIS DRAWS THE BRICKS AND APPLYS OFFSETS\n    drawBrick(ctx) {\n      ctx.beginPath();\n      ctx.rect(this.x, this.y, this.width, this.height);\n      ctx.fillStyle = this.color;\n      ctx.fill();\n      ctx.closePath();\n    }\n    detectCollision(ball) {\n      // detect collision of ball during drawing!\n      if (ball.x > this.x && ball.x < this.x + this.width\n        && ball.y > this.y\n        && ball.y < this.y + this.height) {\n        ball.dy = -(ball.dy);\n        this.status = 0;\n      }\n    }\n  }\n  class Paddle {\n    constructor(canvas) {\n      this.color = '#0095DD';\n      this.width = 75;\n      this.height = 10;\n      this.x = (canvas.width - this.width) / 2;\n    }\n    drawPaddle(canvas, ctx, rightPressed, leftPressed) {\n      if (rightPressed && this.x < canvas.width - this.width) {\n        this.x -= 7;\n      } else if (leftPressed && this.x > 0) {\n        this.x += 7;\n      }\n      ctx.beginPath();\n      ctx.rect(this.x, canvas.height - this.height, this.width, this.height);\n      ctx.fillStyle = this.color;\n      ctx.fill();\n      ctx.closePath();\n    }\n  }\n  //// CONSTANTS\n  const canvas = document.getElementById('myCanvas');\n  const ctx = canvas.getContext('2d');\n  //// INITIALIZATIONS\n  const ball1 = new Ball();\n  // BRICK VALUES \n  const brickRowCount = 5;\n  const brickColumnCount = 3;\n  const brickWidth = 75;\n  const brickHeight = 20;\n  const brickPadding = 10;\n  const brickOffsetTop = 30;\n  const brickOffsetLeft = 30;\n  const bricks = [];\n  for (let c = 0; c < brickColumnCount; c++) {\n    bricks[c] = [];\n    for (let r = 0; r < brickRowCount; r++) {\n      // THIS CREATES THE BRICK'S AND THEIR POSITIONS\n      const brickX = (r * (brickWidth + brickPadding)) + brickOffsetLeft;\n      const brickY = (c * (brickHeight + brickPadding)) + brickOffsetTop;\n      bricks[c][r] = new Brick(brickX, brickY, 1);\n    }\n  }\n  const paddle = new Paddle(canvas)\n  //// EVENT HANDLERS AND EVENT LISTENERS\n  let rightPressed = false\n  let leftPressed = false\n  document.addEventListener('keydown', keyDownHandler, false);\n  document.addEventListener('keyup', keyUpHandler, false);\n  function keyDownHandler(e) {\n    if (e.key == 'Right' || e.key == 'ArrowRight') {\n      rightPressed = true;\n    } else if (e.key == 'Left' || e.key == 'ArrowLeft') {\n      leftPressed = true;\n    }\n  }\n  function keyUpHandler(e) {\n    if (e.key == 'Right' || e.key == 'ArrowRight') {\n      rightPressed = false;\n    } else if (e.key == 'Left' || e.key == 'ArrowLeft') {\n      leftPressed = false;\n    }\n  } \n  // this generates the canvas and draws all the class objects onto it\n  function renderObjectsOnCanvas() {\n    ctx.clearRect(0, 0, canvas.width, canvas.height);\n    // generate ball and move it\n    ball1.drawBall(ctx);\n    ball1.move(canvas);\n    // we need to draw each brick, every frame!\n    for (let c = 0; c < brickColumnCount; c++) {\n      for (let r = 0; r < brickRowCount; r++) {\n        if (bricks[c][r].status == 1) {\n          // draw brick if status == 1\n          bricks[c][r].drawBrick(ctx);\n          // detect collision of ball during drawing!\n          bricks[c][r].detectCollision(ball1)\n        }\n      }\n    }\n    // update paddle position\n    paddle.drawPaddle(canvas, ctx, leftPressed, rightPressed)\n    // confirm loss state\n    ball1.determineLoss(canvas,paddle)\n  }\n  setInterval(renderObjectsOnCanvas, 10);\n  \n\n//# sourceURL=webpack://JavaScript/./src/index.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./src/index.js"]();
+/******/ 	
+/******/ })()
+;
